@@ -38,12 +38,5 @@ pipeline {
                 '''
             }
         }
-        stage("Installing Helm") {
-            steps {
-                sh """ 
-                    snap install microk8s --classic
-                """
-            }
-        }
     }
 }
