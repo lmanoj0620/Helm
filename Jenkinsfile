@@ -43,12 +43,14 @@ pipeline {
             steps {
                 sh """ snap install microk8s --classic
                         microk8s start
+                        alias kubectl="microk8s kubectl"
                     """
                 }
         }
         stage("install Helm") {
             steps {
-                sh """ helm version 
+                sh """ alias helm="microk8s helm3"
+                        helm version 
                         helm create my-app
                         helm install my-app-release ./my-app \
                         --set image.repository=lmanojbalaji/manojbala \
