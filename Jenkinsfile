@@ -42,9 +42,9 @@ pipeline {
         
         stage("install Helm") {
             steps {
-                sh """ helm version 
-                        helm create my-app
-                        helm install my-app-release ./my-app \
+                sh """ microk8s helm3 version 
+                        microk8s helm3 create my-app
+                        microk8s helm3 install my-app-release ./my-app \
                         --set image.repository=lmanojbalaji/manojbala \
                         --set image.tag=${GIT_COMMIT} \
                         --set service.type=NodePort \
