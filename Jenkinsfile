@@ -39,13 +39,7 @@ pipeline {
                 '''
             } 
         }
-        stage("install Microk8s") {
-            steps {
-                sh """ sudo snap install microk8s --classic
-                        sudomicrok8s start
-                    """
-                }
-        }
+        
         stage("install Helm") {
             steps {
                 sh """ sudo helm version 
