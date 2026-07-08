@@ -37,7 +37,35 @@ pipeline {
                     docker push ${Image_Name}
                     echo "${Image_Name} pushed to Docker Hub successfully."
                 '''
-            }
+            } 
+        }
+        stage("install Microk8s") {
+            steps {
+                sh """ snap install microk8s --classic
+                        microk8s start
+                    """
+                }
+        }
+        stage("install Helm") {
+            steps {
+                sh """ helm version 
+                        helm create my-app
+                        helm install my-app-release ./my-app \
+                        --set image.repository=lmanojbalaji/manojbala \
+                        --set image.tag=${GIT_COMMIT} \
+                        --set service.type=NodePort \
+                        --set service.port=8501
+
+                        
+                    """
+                }               
+        }
+        stage("Check Deployments"){
+            steps {
+                sh """ microk8s.kubectl get deployments
+                        microk8s.kubectl get pods
+                    """
+                }
         }
     }
 }
