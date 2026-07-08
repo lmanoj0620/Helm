@@ -35,6 +35,7 @@ pipeline {
             steps {
                 sh '''
                     docker push ${Image_Name}
+                    echo "${Image_Name} pushed to Docker Hub successfully."
                 '''
             }
         }
