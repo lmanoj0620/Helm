@@ -41,18 +41,16 @@ pipeline {
         }
         stage("install Microk8s") {
             steps {
-                sh """ snap install microk8s --classic
-                        microk8s start
-                        alias kubectl="microk8s kubectl"
+                sh """ sudo snap install microk8s --classic
+                        sudomicrok8s start
                     """
                 }
         }
         stage("install Helm") {
             steps {
-                sh """ alias helm="microk8s helm3"
-                        helm version 
-                        helm create my-app
-                        helm install my-app-release ./my-app \
+                sh """ sudo helm version 
+                        sudo helm create my-app
+                        sudo helm install my-app-release ./my-app \
                         --set image.repository=lmanojbalaji/manojbala \
                         --set image.tag=${GIT_COMMIT} \
                         --set service.type=NodePort \
